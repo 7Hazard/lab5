@@ -26,3 +26,5 @@ hs_err_pid*
 game/target/
 
 .idea/libraries/
+
+.idea/workspace.xml
