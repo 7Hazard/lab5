@@ -19,6 +19,14 @@ public class PieceController {
         
         board.unmarkAll();
         
+        // if clicked on own piece while selected, deselect
+        if(board.selectedPiece == piece)
+        {
+            board.selectedPiece = null;
+            App.get().draw();
+            return;
+        }
+        
         board.selectedPiece = piece;
 
         // down
