@@ -18,10 +18,6 @@ public class BoardView extends Pane {
 
                 children.add(new TileView(tile, x, y, colored));
 
-                if (tile.hasPiece()) {
-                    children.add(new PieceView(tile.getPiece(), x, y));
-                }
-
                 colored = !colored;
             }
             colored = !colored;

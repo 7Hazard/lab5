@@ -17,9 +17,6 @@ public class PieceView extends Circle {
         setStroke(Color.WHITE);
         setStrokeWidth(PIECE_RADIUS * 0.1);
 
-        setTranslateX((TILE_SIZE - 2 * PIECE_RADIUS) / 2);
-        setTranslateY((TILE_SIZE - 2 * PIECE_RADIUS) / 2);
-
-        relocate(x * TILE_SIZE, y * TILE_SIZE);
+        relocate((TILE_SIZE - 2 * PIECE_RADIUS) / 2, (TILE_SIZE - 2 * PIECE_RADIUS) / 2);
     }
 }
