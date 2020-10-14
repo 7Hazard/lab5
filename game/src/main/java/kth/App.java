@@ -2,6 +2,11 @@ package kth;
 
 import javafx.application.*;
 import javafx.scene.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.layout.VBox;
 import javafx.stage.*;
 import kth.models.BoardModel;
 import kth.views.BoardView;
@@ -21,11 +26,22 @@ public class App extends Application {
     public static final int HEIGHT = 8;
 
     public void draw() {
+        stage.setTitle("Turkisk Dam");
+
+        MenuBar menuBar = new MenuBar();
+        {
+            Menu menu = new Menu("Game");
+            MenuItem restart = new MenuItem("Restart");
+            menu.getItems().add(restart);
+            menuBar.getMenus().add(menu);
+        }
+        
+        VBox box = new VBox(menuBar);
         var boardview = new BoardView(BoardModel.get());
-        Scene scene = new Scene(boardview);
+        box.getChildren().add(boardview);
+        Scene scene = new Scene(box);
         stage.setScene(scene);
         
-        stage.setTitle("Turkisk Dam");
         stage.show();
     }
 
