@@ -70,4 +70,8 @@ public class BoardModel {
             }
         }
     }
+
+    public void reset() {
+        singleton = new BoardModel();
+    }
 }

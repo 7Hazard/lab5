@@ -23,6 +23,7 @@ public class App extends Application {
     private BoardView boardview;
     private Stage stage;
     private VBox vbox;
+    private MenuController menuController;
 
     public static App get() {
         return app;
@@ -43,6 +44,7 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         app = this;
         this.stage = stage;
+        this.menuController = new MenuController();
 
         stage.setTitle("Turkisk Dam");
 
@@ -50,6 +52,7 @@ public class App extends Application {
         {
             Menu menu = new Menu("Game");
             MenuItem restart = new MenuItem("Restart");
+            restart.setOnAction(actionEvent -> menuController.restart());
             menu.getItems().add(restart);
             menuBar.getMenus().add(menu);
         }
