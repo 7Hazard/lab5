@@ -10,15 +10,18 @@ import kth.views.BoardView;
  * JavaFX App
  */
 public class App extends Application {
-
+    private static App app;
+    public static App get() {
+        return app;
+    }
+    
     private Stage stage;
-    private BoardModel board = new BoardModel();
     public static final int TILE_SIZE = 100;
     public static final int WIDTH = 8;
     public static final int HEIGHT = 8;
 
     public void draw() {
-        var boardview = new BoardView(board);
+        var boardview = new BoardView(BoardModel.get());
         Scene scene = new Scene(boardview);
         stage.setScene(scene);
         
@@ -27,11 +30,12 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        Application.launch(args);
+        launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
+        app = this;
         this.stage = stage;
         draw();
     }
