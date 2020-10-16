@@ -18,5 +18,15 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-controls:win:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-graphics:win:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-base:win:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:13" level="project" />
+    <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:win:13" level="project" />
+    <orderEntry type="library" name="Maven: de.elnarion.util:plantuml-generator-util:1.1.2" level="project" />
+    <orderEntry type="library" name="Maven: io.github.classgraph:classgraph:4.8.47" level="project" />
   </component>
 </module>

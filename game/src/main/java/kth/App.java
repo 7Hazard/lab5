@@ -1,40 +1,17 @@
 package kth;
 
 import javafx.application.*;
-import javafx.scene.*;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.layout.VBox;
 import javafx.stage.*;
-import kth.controllers.MenuController;
-import kth.models.BoardModel;
-import kth.views.BoardView;
+import java.util.ArrayList;
+import java.util.List;
+import de.elnarion.util.plantuml.generator.PlantUMLClassDiagramGenerator;
+import kth.views.GameView;
 
 /**
  * JavaFX App
  */
 public class App extends Application {
-    public static final int TILE_SIZE = 100;
-    public static final int WIDTH = 8;
-    public static final int HEIGHT = 8;
-    private static App app;
-    private BoardView boardview;
-    private Stage stage;
-    private VBox vbox;
-    private MenuController menuController;
-
-    public static App get() {
-        return app;
-    }
-    
-    public void draw() {
-        vbox.getChildren().remove(boardview);
-        boardview = new BoardView(BoardModel.get());
-        vbox.getChildren().add(boardview);
-        stage.show();
-    }
+    GameView gameView;
 
     public static void main(String[] args) {
         launch(args);
@@ -42,28 +19,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        app = this;
-        this.stage = stage;
-        this.menuController = new MenuController();
+        // uml generator
+//        List<String> scanpackages = new ArrayList<>();
+//        scanpackages.add("kth");
+//        List<String> hideClasses = new ArrayList<>();
+//        PlantUMLClassDiagramGenerator generator =
+//                new PlantUMLClassDiagramGenerator(this.getClass().getClassLoader(),
+//                        scanpackages,null, hideClasses, false, false);
+//        String result = generator.generateDiagramText();
+//        System.out.println(result);
+        // uml generator
 
-        stage.setTitle("Turkisk Dam");
-
-        MenuBar menuBar = new MenuBar();
-        {
-            Menu menu = new Menu("Game");
-            MenuItem restart = new MenuItem("Restart");
-            restart.setOnAction(actionEvent -> menuController.restart());
-            menu.getItems().add(restart);
-            menuBar.getMenus().add(menu);
-        }
-
-        vbox = new VBox(menuBar);
-        boardview = new BoardView(BoardModel.get());
-        vbox.getChildren().add(boardview);
-        
-        Scene scene = new Scene(vbox);
-        stage.setScene(scene);
-        
-        draw();
+        gameView = new GameView(stage);
+        GameView.draw();
     }
 }

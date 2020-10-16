@@ -20,7 +20,7 @@ public class BoardModel {
     public BoardModel() {
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
-                TileModel tile = new TileModel(x, y);
+                TileModel tile = new TileModel();
 
                 if (y <= 2 && (x + y) % 2 != 0) {
                     tile.setPiece(new PieceModel(tile, Color.RED));
@@ -31,10 +31,6 @@ public class BoardModel {
                 tiles[x][y] = tile;
             }
         }
-    }
-
-    public boolean posIsValid(int x, int y) {
-        return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
     }
 
     @Override
@@ -53,23 +49,23 @@ public class BoardModel {
         return buffer.toString();
     }
 
-    public void mark(int x, int y) throws IndexOutOfBoundsException {
-        if (!posIsValid(x, y)) throw new IndexOutOfBoundsException();
-        tiles[x][y].setMarked(true);
-    }
+//    public void mark(int x, int y) throws IndexOutOfBoundsException {
+//        if (!posIsValid(x, y)) throw new IndexOutOfBoundsException();
+//        tiles[x][y].setMarked(true);
+//    }
 
 //    public void unmark(int x, int y) throws IndexOutOfBoundsException {
 //        if (!posIsValid(x, y)) throw new IndexOutOfBoundsException();
 //        tiles[x][y].setMarked(false);
 //    }
 
-    public void unmarkAll() {
-        for (var row : tiles) {
-            for (var tile : row) {
-                tile.setMarked(false);
-            }
-        }
-    }
+//    public void unmarkAll() {
+//        for (var row : tiles) {
+//            for (var tile : row) {
+//                tile.setMarked(false);
+//            }
+//        }
+//    }
 
     public void reset() {
         singleton = new BoardModel();

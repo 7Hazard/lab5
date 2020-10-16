@@ -1,29 +1,29 @@
 package kth.views;
 
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import kth.App;
-import kth.controllers.TileController;
+import kth.controllers.GameController;
 import kth.models.TileModel;
 
 public class TileView extends Group {
-    private final TileModel tile;
-    private TileController controller;
+    public static final int TILE_SIZE = 100;
+    private boolean isMarked = false;
+    boolean colored;
+    Rectangle rect;
+    PieceView pieceView;
 
     public TileView(TileModel tile, int x, int y, boolean colored) {
-        this.tile = tile;
-        this.controller = new TileController(tile);
+        this.colored = colored;
 
-        Rectangle rect = new Rectangle();
-        rect.setWidth(App.TILE_SIZE);
-        rect.setHeight(App.TILE_SIZE);
+        rect = new Rectangle();
+        rect.setWidth(TILE_SIZE);
+        rect.setHeight(TILE_SIZE);
 
-        relocate(x * App.TILE_SIZE, y * App.TILE_SIZE);
+        relocate(x * TILE_SIZE, y * TILE_SIZE);
 
-        if(tile.isMarked())
-            rect.setFill(Color.GREEN);
-        else if (colored)
+        if (colored)
             rect.setFill(Color.BROWN);
         else
             rect.setFill(Color.DARKGRAY);
@@ -31,11 +31,32 @@ public class TileView extends Group {
         
         if(tile.hasPiece())
         {
-            var piece = new PieceView(tile.getPiece());
-            getChildren().add(piece);
+            pieceView = new PieceView(tile.getPiece(), x, y);
+            getChildren().add(pieceView);
         }
         else {
-            setOnMouseClicked(mouseEvent -> controller.onClick());
+            setOnMouseClicked(this::onClick);
         }
+    }
+
+    private void onClick(MouseEvent mouseEvent) {
+        GameController.get().onSelectTile(this);
+    }
+
+    public boolean isMarked() {
+        return isMarked;
+    }
+
+    public void mark() {
+        isMarked = true;
+        rect.setFill(Color.GREEN);
+    }
+
+    public void unmark() {
+        isMarked = false;
+        if (colored)
+            rect.setFill(Color.BROWN);
+        else
+            rect.setFill(Color.DARKGRAY);
     }
 }
