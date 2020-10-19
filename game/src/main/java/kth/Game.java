@@ -6,7 +6,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import kth.controllers.MenuController;
+import kth.controllers.GameController;
 import kth.models.BoardModel;
 import kth.views.BoardView;
 
@@ -17,7 +17,7 @@ public class Game {
 
     private static Game singleton = new Game();
     private Stage stage;
-    private MenuController menuController = new MenuController();
+    private GameController gameController = new GameController();
     private VBox vbox;
     private BoardView boardview;
 
@@ -34,7 +34,7 @@ public class Game {
         {
             Menu menu = new Menu("Game");
             MenuItem restart = new MenuItem("Restart");
-            restart.setOnAction(actionEvent -> menuController.restart());
+            restart.setOnAction(actionEvent -> gameController.restart());
             menu.getItems().add(restart);
             menuBar.getMenus().add(menu);
         }
@@ -50,9 +50,14 @@ public class Game {
     }
 
     public void draw() {
-        vbox.getChildren().remove(boardview);
-        boardview = new BoardView(BoardModel.get());
-        vbox.getChildren().add(boardview);
         stage.show();
+    }
+
+    public BoardView getBoardView() {
+        return boardview;
+    }
+    
+    public static boolean posIsValid(int x, int y) {
+        return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
     }
 }

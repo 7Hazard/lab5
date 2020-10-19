@@ -4,38 +4,64 @@ import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import kth.Game;
-import kth.controllers.TileController;
+import kth.controllers.GameController;
 import kth.models.TileModel;
 
 public class TileView extends Group {
-    private final TileModel tile;
-    private TileController controller;
+    public final TileModel tile;
+    private final int x;
+    private final int y;
+    private final Rectangle rect;
+    private final Color color;
+    private PieceView piece;
 
-    public TileView(TileModel tile, int x, int y, boolean colored) {
-        this.tile = tile;
-        this.controller = new TileController(tile);
+    public TileView(TileModel model, int x, int y, boolean colored) {
+        this.tile = model;
+        this.x = x;
+        this.y = y;
 
-        Rectangle rect = new Rectangle();
+        rect = new Rectangle();
         rect.setWidth(Game.TILE_SIZE);
         rect.setHeight(Game.TILE_SIZE);
 
         relocate(x * Game.TILE_SIZE, y * Game.TILE_SIZE);
-
-        if(tile.isMarked())
-            rect.setFill(Color.GREEN);
-        else if (colored)
-            rect.setFill(Color.BROWN);
-        else
-            rect.setFill(Color.DARKGRAY);
-        getChildren().add(rect);
         
-        if(tile.hasPiece())
-        {
-            var piece = new PieceView(tile.getPiece());
+        if (colored)
+            color = Color.BROWN;
+        else
+            color = Color.DARKGRAY;
+        rect.setFill(color);
+        
+        getChildren().add(rect);
+
+        if (model.hasPiece()) {
+            piece = new PieceView(model.getPiece(), this);
             getChildren().add(piece);
+        } else {
+            setOnMouseClicked(mouseEvent -> GameController.get().onSelectTile(this));
         }
-        else {
-            setOnMouseClicked(mouseEvent -> controller.onClick());
-        }
+    }
+
+    private boolean isMarked = false;
+
+    public boolean isMarked() {
+        return isMarked;
+    }
+
+    public void setMarked(boolean marked) {
+        if (marked)
+            rect.setFill(Color.GREEN);
+        else
+            rect.setFill(color);
+        
+        isMarked = marked;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+        return x;
     }
 }
