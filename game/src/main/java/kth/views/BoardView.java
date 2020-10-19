@@ -3,7 +3,7 @@ package kth.views;
 import javafx.scene.layout.Pane;
 import kth.models.BoardModel;
 
-import static kth.App.*;
+import static kth.Game.*;
 
 public class BoardView extends Pane {
 

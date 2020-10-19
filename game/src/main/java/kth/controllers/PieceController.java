@@ -1,6 +1,6 @@
 package kth.controllers;
 
-import kth.App;
+import kth.Game;
 import kth.models.BoardModel;
 import kth.models.PieceModel;
 
@@ -23,7 +23,7 @@ public class PieceController {
         if(board.selectedPiece == piece)
         {
             board.selectedPiece = null;
-            App.get().draw();
+            Game.get().draw();
             return;
         }
         
@@ -60,6 +60,6 @@ public class PieceController {
                 board.tiles[x][y].setMarked(true);
         }
 
-        App.get().draw();
+        Game.get().draw();
     }
 }

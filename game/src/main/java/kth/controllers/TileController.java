@@ -1,6 +1,6 @@
 package kth.controllers;
 
-import kth.App;
+import kth.Game;
 import kth.models.BoardModel;
 import kth.models.TileModel;
 
@@ -24,6 +24,6 @@ public class TileController {
         
         board.unmarkAll();
 
-        App.get().draw();
+        Game.get().draw();
     }
 }

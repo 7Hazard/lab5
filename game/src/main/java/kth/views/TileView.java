@@ -3,7 +3,7 @@ package kth.views;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import kth.App;
+import kth.Game;
 import kth.controllers.TileController;
 import kth.models.TileModel;
 
@@ -16,10 +16,10 @@ public class TileView extends Group {
         this.controller = new TileController(tile);
 
         Rectangle rect = new Rectangle();
-        rect.setWidth(App.TILE_SIZE);
-        rect.setHeight(App.TILE_SIZE);
+        rect.setWidth(Game.TILE_SIZE);
+        rect.setHeight(Game.TILE_SIZE);
 
-        relocate(x * App.TILE_SIZE, y * App.TILE_SIZE);
+        relocate(x * Game.TILE_SIZE, y * Game.TILE_SIZE);
 
         if(tile.isMarked())
             rect.setFill(Color.GREEN);

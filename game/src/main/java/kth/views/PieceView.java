@@ -5,7 +5,7 @@ import javafx.scene.shape.Circle;
 import kth.controllers.PieceController;
 import kth.models.PieceModel;
 
-import static kth.App.TILE_SIZE;
+import static kth.Game.TILE_SIZE;
 import static kth.models.PieceModel.PIECE_RADIUS;
 
 public class PieceView extends Circle {

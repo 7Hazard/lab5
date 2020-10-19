@@ -16,54 +16,12 @@ import kth.views.BoardView;
  * JavaFX App
  */
 public class App extends Application {
-    public static final int TILE_SIZE = 100;
-    public static final int WIDTH = 8;
-    public static final int HEIGHT = 8;
-    private static App app;
-    private BoardView boardview;
-    private Stage stage;
-    private VBox vbox;
-    private MenuController menuController;
-
-    public static App get() {
-        return app;
-    }
-    
-    public void draw() {
-        vbox.getChildren().remove(boardview);
-        boardview = new BoardView(BoardModel.get());
-        vbox.getChildren().add(boardview);
-        stage.show();
-    }
-
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
-        app = this;
-        this.stage = stage;
-        this.menuController = new MenuController();
-
-        stage.setTitle("Turkisk Dam");
-
-        MenuBar menuBar = new MenuBar();
-        {
-            Menu menu = new Menu("Game");
-            MenuItem restart = new MenuItem("Restart");
-            restart.setOnAction(actionEvent -> menuController.restart());
-            menu.getItems().add(restart);
-            menuBar.getMenus().add(menu);
-        }
-
-        vbox = new VBox(menuBar);
-        boardview = new BoardView(BoardModel.get());
-        vbox.getChildren().add(boardview);
-        
-        Scene scene = new Scene(vbox);
-        stage.setScene(scene);
-        
-        draw();
+    public void start(Stage stage) {
+        Game.get().init(stage);
     }
 }
