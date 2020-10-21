@@ -1,13 +1,12 @@
 package kth.views;
 
-import javafx.event.EventType;
-import javafx.scene.Group;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import kth.Game;
-import kth.controllers.GameController;
-import kth.models.TileModel;
+import javafx.scene.*;
+import javafx.scene.input.*;
+import javafx.scene.paint.*;
+import javafx.scene.shape.*;
+import kth.*;
+import kth.controllers.*;
+import kth.models.*;
 
 public class TileView extends Group {
     public final TileModel model;
@@ -59,6 +58,13 @@ public class TileView extends Group {
         this.piece = piece;
         getChildren().add(piece);
         this.disableOnClickHandler();
+    }
+
+    public void removePiece(){
+        this.piece.setTileView(null);
+        getChildren().remove(this.piece);
+        this.piece = null;
+        enableOnClickHandler();
     }
 
     private boolean isMarked = false;

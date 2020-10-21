@@ -3,13 +3,13 @@ package kth.views;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import kth.controllers.GameController;
-import kth.models.PieceModel;
+import kth.models.*;
 
 import static kth.Game.TILE_SIZE;
 import static kth.models.PieceModel.PIECE_RADIUS;
 
 public class PieceView extends Circle {
-    public final PieceModel model;
+    private final PieceModel model;
     public TileView tileView;
 
     public PieceView(PieceModel model, TileView tile) {
@@ -29,5 +29,9 @@ public class PieceView extends Circle {
 
     public void setTileView(TileView view) {
         tileView = view;
+    }
+
+    public PieceModel getModel() {
+        return this.model;
     }
 }
