@@ -54,7 +54,6 @@ public class TileView extends Group {
     public void setPiece(PieceView piece) {
         piece.tileView.enableOnClickHandler();
         piece.tileView = this;
-        getChildren().remove(this.piece);
         this.piece = piece;
         getChildren().add(piece);
         this.disableOnClickHandler();
