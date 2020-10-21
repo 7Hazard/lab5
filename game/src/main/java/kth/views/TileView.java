@@ -1,6 +1,8 @@
 package kth.views;
 
+import javafx.event.EventType;
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import kth.Game;
@@ -38,8 +40,25 @@ public class TileView extends Group {
             piece = new PieceView(model.getPiece(), this);
             getChildren().add(piece);
         } else {
-            setOnMouseClicked(mouseEvent -> GameController.get().onSelectTile(this));
+            enableOnClickHandler();
         }
+    }
+    
+    public void enableOnClickHandler() {
+        setOnMouseClicked(this::onClick);
+    }
+    
+    public void disableOnClickHandler() {
+        setOnMouseClicked(null);
+    }
+
+    public void setPiece(PieceView piece) {
+        piece.tileView.enableOnClickHandler();
+        piece.tileView = this;
+        getChildren().remove(this.piece);
+        this.piece = piece;
+        getChildren().add(piece);
+        this.disableOnClickHandler();
     }
 
     private boolean isMarked = false;
@@ -67,5 +86,9 @@ public class TileView extends Group {
 
     public TileModel getModel() {
         return model;
+    }
+
+    private void onClick(MouseEvent mouseEvent) {
+        GameController.get().onSelectTile(this);
     }
 }

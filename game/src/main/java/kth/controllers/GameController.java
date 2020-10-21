@@ -31,7 +31,7 @@ public class GameController {
     }
 
     public void onSelectPiece(PieceView view) {
-        var tile = view.tile;
+        var tile = view.tileView;
         var board = Game.get().getBoardView();
         var model = view.model;
         
@@ -79,18 +79,18 @@ public class GameController {
         Game.get().draw();
     }
 
-    public void onSelectTile(TileView view) {
+    public void onSelectTile(TileView selectedView) {
         System.out.println("TILE ON CLICK");
         var board = Game.get().getBoardView();
-        var tile = view.model;
+        var model = selectedView.model;
         
-//        if (view.isMarked())
-//        {
-//            board.selectedPiece.model.setPiece(null);
-//            model.setPiece(board.selectedPiece);
-//            board.selectedPiece.model = model;
-//            board.selectedPiece = null;
-//        }
+        if (selectedView.isMarked())
+        {
+            selectedPiece.tileView.model.setPiece(null);
+            selectedView.setPiece(selectedPiece);
+            selectedView.model.setPiece(selectedPiece.model);
+            selectedPiece = null;   
+        }
 
         selectedPiece = null;
         board.unmarkAll();

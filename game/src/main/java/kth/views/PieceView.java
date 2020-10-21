@@ -10,12 +10,12 @@ import static kth.models.PieceModel.PIECE_RADIUS;
 
 public class PieceView extends Circle {
     public final PieceModel model;
-    public final TileView tile;
+    public TileView tileView;
 
     public PieceView(PieceModel model, TileView tile) {
         super(PIECE_RADIUS, model.getColor());
         this.model = model;
-        this.tile = tile;
+        this.tileView = tile;
 
         setStroke(Color.WHITE);
         setStrokeWidth(PIECE_RADIUS * 0.1);
@@ -25,5 +25,9 @@ public class PieceView extends Circle {
         setOnMouseClicked(mouseEvent -> {
             GameController.get().onSelectPiece(this);
         });
+    }
+
+    public void setTileView(TileView view) {
+        tileView = view;
     }
 }
