@@ -3,7 +3,6 @@ package kth.views;
 import javafx.scene.layout.Pane;
 import kth.Game;
 import kth.models.BoardModel;
-import kth.models.PieceModel;
 
 import static kth.Game.*;
 
@@ -50,5 +49,9 @@ public class BoardView extends Pane {
     
     public boolean posIsValid(int x, int y) {
         return Game.posIsValid(x, y);
+    }
+
+    public TileView getTile(int x, int y) {
+        return tileviews[x][y];
     }
 }

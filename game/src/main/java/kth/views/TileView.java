@@ -8,7 +8,7 @@ import kth.controllers.GameController;
 import kth.models.TileModel;
 
 public class TileView extends Group {
-    public final TileModel tile;
+    public final TileModel model;
     private final int x;
     private final int y;
     private final Rectangle rect;
@@ -16,7 +16,7 @@ public class TileView extends Group {
     private PieceView piece;
 
     public TileView(TileModel model, int x, int y, boolean colored) {
-        this.tile = model;
+        this.model = model;
         this.x = x;
         this.y = y;
 
@@ -63,5 +63,9 @@ public class TileView extends Group {
 
     public int getX() {
         return x;
+    }
+
+    public TileModel getModel() {
+        return model;
     }
 }

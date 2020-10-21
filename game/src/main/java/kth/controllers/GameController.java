@@ -18,6 +18,17 @@ public class GameController {
         BoardModel.get().reset();
         Game.get().draw();
     }
+    
+    public void markIfValid(int x, int y) {
+        var board = Game.get().getBoardView();
+        if(board.posIsValid(x, y)){
+            var mtile = board.getTile(x, y);
+            var tilemodel = mtile.getModel();
+            if(!tilemodel.hasPiece()) {
+                board.mark(x, y);
+            }
+        }
+    }
 
     public void onSelectPiece(PieceView view) {
         var tile = view.tile;
@@ -44,14 +55,12 @@ public class GameController {
             // left
             var x = tile.getX()-1;
             var y = tile.getY()+1;
-            if(board.posIsValid(x, y))
-                board.mark(x, y);
+            markIfValid(x, y);
 
             // right
             x = tile.getX()+1;
             y = tile.getY()+1;
-            if(board.posIsValid(x, y))
-                board.mark(x, y);
+            markIfValid(x, y);
         }
 
         if(model.isKing() || model.isBlack())
@@ -59,14 +68,12 @@ public class GameController {
             // left
             var x = tile.getX()-1;
             var y = tile.getY()-1;
-            if(board.posIsValid(x, y))
-                board.mark(x, y);
+            markIfValid(x, y);
 
             // right
             x = tile.getX()+1;
             y = tile.getY()-1;
-            if(board.posIsValid(x, y))
-                board.mark(x, y);
+            markIfValid(x, y);
         }
 
         Game.get().draw();
@@ -75,13 +82,13 @@ public class GameController {
     public void onSelectTile(TileView view) {
         System.out.println("TILE ON CLICK");
         var board = Game.get().getBoardView();
-        var tile = view.tile;
+        var tile = view.model;
         
 //        if (view.isMarked())
 //        {
-//            board.selectedPiece.tile.setPiece(null);
-//            tile.setPiece(board.selectedPiece);
-//            board.selectedPiece.tile = tile;
+//            board.selectedPiece.model.setPiece(null);
+//            model.setPiece(board.selectedPiece);
+//            board.selectedPiece.model = model;
 //            board.selectedPiece = null;
 //        }
 
