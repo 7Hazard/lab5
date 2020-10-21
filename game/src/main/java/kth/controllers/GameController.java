@@ -6,6 +6,7 @@ import kth.models.*;
 import kth.views.*;
 
 import static kth.Game.HEIGHT;
+import static kth.Game.WIDTH;
 
 public class GameController {
     private static final GameController singleton = new GameController();
@@ -126,6 +127,29 @@ public class GameController {
             selectedPiece.tileView.model.setPiece(null);
             selectedView.setPiece(selectedPiece);
             selectedView.model.setPiece(selectedPiece.getModel());
+            int counterRed = 0;
+            int counterBlack = 0;
+
+            for(int y = 0; y < HEIGHT; y++){
+                for(int x = 0 ; x < WIDTH; x++){
+                    if(board.getTile(x,y).getModel().hasPiece()){
+                        var piece = board.getTile(x,y).getModel().getPiece();
+                        if(piece.getColor() == Color.BLACK){
+                            counterBlack++;
+                        }
+                        if(piece.getColor() == Color.RED){
+                            counterRed++;
+                        }
+                    }
+                }
+            }
+            if(counterRed == 0){
+                System.out.println("RED: Game over");
+            }
+            if(counterBlack == 0){
+                System.out.println("BLACK: Game over");
+            }
+
             if(selectedPiece.tileView.getY() == HEIGHT -1 && selectedPiece.getModel().isRed()){
                 selectedPiece.makeKing();
             }
