@@ -1,12 +1,16 @@
 package kth.controllers;
 
+import javafx.scene.paint.*;
 import kth.*;
 import kth.models.*;
 import kth.views.*;
 
+import static kth.Game.HEIGHT;
+
 public class GameController {
     private static final GameController singleton = new GameController();
     private PieceView selectedPiece;
+    private Color currentTurn = Color.BLACK;
 
     public static GameController get() {
         return singleton;
@@ -34,7 +38,7 @@ public class GameController {
                 if (!(currentPiece.getColor() == tilemodel.getPiece().getColor())) {
                     x = x + dx;
                     y = y + dy;
-                    if (!board.getTile(x, y).getModel().hasPiece()) {
+                    if (board.posIsValid(x,y) &&!board.getTile(x, y).getModel().hasPiece()) {
                         board.mark(x, y);
                     }
                 }
@@ -44,6 +48,7 @@ public class GameController {
     }
 
     public void onSelectPiece(PieceView view) {
+
         var tile = view.tileView;
         var board = Game.get().getBoardView();
         var model = view.getModel();
@@ -59,8 +64,10 @@ public class GameController {
             return;
         }
 
+        if(view.getModel().getColor() != currentTurn) {
+            return;
+        }
         selectedPiece = view;
-
 
         // down
         if (model.isKing() || model.isRed()) {
@@ -97,7 +104,6 @@ public class GameController {
 
         if (selectedView.isMarked()) {
 
-
             var currentX = selectedPiece.tileView.getX();
             var currentY = selectedPiece.tileView.getY();
 
@@ -120,7 +126,17 @@ public class GameController {
             selectedPiece.tileView.model.setPiece(null);
             selectedView.setPiece(selectedPiece);
             selectedView.model.setPiece(selectedPiece.getModel());
-            selectedPiece = null;
+            if(selectedPiece.tileView.getY() == HEIGHT -1 && selectedPiece.getModel().isRed()){
+                selectedPiece.makeKing();
+            }
+            if(selectedPiece.tileView.getY() == 0 && selectedPiece.getModel().isBlack()){
+                selectedPiece.makeKing();
+            }
+            if(currentTurn == Color.BLACK){
+                currentTurn = Color.RED;
+            }else if(currentTurn == Color.RED){
+                currentTurn = Color.BLACK;
+            }
         }
 
         selectedPiece = null;

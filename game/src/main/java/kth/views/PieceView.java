@@ -34,4 +34,9 @@ public class PieceView extends Circle {
     public PieceModel getModel() {
         return this.model;
     }
+    public void makeKing(){
+            model.setKing(true);
+            setStroke(Color.YELLOW);
+            setStrokeWidth(PIECE_RADIUS * 0.2);
+    }
 }
