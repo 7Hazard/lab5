@@ -19,7 +19,9 @@ public class GameController {
 
     public void restart() {
         System.out.println("Restarting");
-        BoardModel.get().reset();
+        selectedPiece = null;
+        currentTurn = Color.BLACK;
+        Game.get().reset();
         Game.get().draw();
     }
 
@@ -28,7 +30,7 @@ public class GameController {
         var x = currentTile.getX() + dx;
         var y = currentTile.getY() + dy;
         var currentPiece = selectedPiece.getModel();
-        var board = Game.get().getBoardView();
+        var board = Game.get().getGameView().getBoardView();
 
         if (board.posIsValid(x, y)) {
             var mtile = board.getTile(x, y);
@@ -36,7 +38,7 @@ public class GameController {
             if (!tilemodel.hasPiece()) {
                 board.mark(x, y);
             } else {
-                if (!(currentPiece.getColor() == tilemodel.getPiece().getColor())) {
+                if (!(currentPiece.getColor() == tilemodel.getPieceModel().getColor())) {
                     x = x + dx;
                     y = y + dy;
                     if (board.posIsValid(x,y) &&!board.getTile(x, y).getModel().hasPiece()) {
@@ -51,7 +53,7 @@ public class GameController {
     public void onSelectPiece(PieceView view) {
 
         var tile = view.tileView;
-        var board = Game.get().getBoardView();
+        var board = Game.get().getGameView().getBoardView();
         var model = view.getModel();
 
         System.out.println("ON CLICK " + tile.getX() + " " + tile.getY());
@@ -100,7 +102,7 @@ public class GameController {
 
     public void onSelectTile(TileView selectedView) {
         System.out.println("TILE ON CLICK");
-        var board = Game.get().getBoardView();
+        var board = Game.get().getGameView().getBoardView();
         var model = selectedView.model;
 
         if (selectedView.isMarked()) {
@@ -120,20 +122,20 @@ public class GameController {
                 var removePieceY = selectedPiece.tileView.getY() + dy;
                 if (board.posIsValid(removePieceX, removePieceY)) {
                     var tile = board.getTile(removePieceX, removePieceY);
-                    tile.getModel().setPiece(null);
+                    tile.getModel().setPieceModel(null);
                     tile.removePiece();
                 }
             }
-            selectedPiece.tileView.model.setPiece(null);
+            selectedPiece.tileView.model.setPieceModel(null);
             selectedView.setPiece(selectedPiece);
-            selectedView.model.setPiece(selectedPiece.getModel());
+            selectedView.model.setPieceModel(selectedPiece.getModel());
             int counterRed = 0;
             int counterBlack = 0;
 
             for(int y = 0; y < HEIGHT; y++){
                 for(int x = 0 ; x < WIDTH; x++){
                     if(board.getTile(x,y).getModel().hasPiece()){
-                        var piece = board.getTile(x,y).getModel().getPiece();
+                        var piece = board.getTile(x,y).getModel().getPieceModel();
                         if(piece.getColor() == Color.BLACK){
                             counterBlack++;
                         }

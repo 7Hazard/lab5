@@ -14,7 +14,7 @@ public class TileView extends Group {
     private final int y;
     private final Rectangle rect;
     private final Color color;
-    private PieceView piece;
+    private PieceView pieceView;
 
     public TileView(TileModel model, int x, int y, boolean colored) {
         this.model = model;
@@ -36,8 +36,8 @@ public class TileView extends Group {
         getChildren().add(rect);
 
         if (model.hasPiece()) {
-            piece = new PieceView(model.getPiece(), this);
-            getChildren().add(piece);
+            pieceView = new PieceView(model.getPieceModel(), this);
+            getChildren().add(pieceView);
         } else {
             enableOnClickHandler();
         }
@@ -54,15 +54,15 @@ public class TileView extends Group {
     public void setPiece(PieceView piece) {
         piece.tileView.enableOnClickHandler();
         piece.tileView = this;
-        this.piece = piece;
+        this.pieceView = piece;
         getChildren().add(piece);
         this.disableOnClickHandler();
     }
 
     public void removePiece(){
-        this.piece.setTileView(null);
-        getChildren().remove(this.piece);
-        this.piece = null;
+        this.pieceView.setTileView(null);
+        getChildren().remove(this.pieceView);
+        this.pieceView = null;
         enableOnClickHandler();
     }
 

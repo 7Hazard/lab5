@@ -1,21 +1,21 @@
 package kth.models;
 
 public class TileModel {
-    private PieceModel piece;
+    private PieceModel pieceModel;
 
     TileModel() {
         
     }
     
     public boolean hasPiece() {
-        return piece != null;
+        return pieceModel != null;
     }
 
-    public PieceModel getPiece() {
-        return piece;
+    public PieceModel getPieceModel() {
+        return pieceModel;
     }
 
-    public void setPiece(PieceModel piece) {
-        this.piece = piece;
+    public void setPieceModel(PieceModel pieceModel) {
+        this.pieceModel = pieceModel;
     }
 }

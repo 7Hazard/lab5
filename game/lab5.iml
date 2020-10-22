@@ -18,5 +18,7 @@
     <orderEntry type="library" name="Maven: org.openjfx:javafx-base:mac:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:13" level="project" />
     <orderEntry type="library" name="Maven: org.openjfx:javafx-fxml:mac:13" level="project" />
+    <orderEntry type="library" name="Maven: de.elnarion.util:plantuml-generator-util:1.1.2" level="project" />
+    <orderEntry type="library" name="Maven: io.github.classgraph:classgraph:4.8.47" level="project" />
   </component>
 </module>

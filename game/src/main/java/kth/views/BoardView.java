@@ -8,25 +8,13 @@ import static kth.Game.*;
 
 public class BoardView extends Pane {
 
-    private final TileView[][] tileviews;
+    private TileView[][] tileviews;
 
-    public BoardView(BoardModel board) {
-        var children = this.getChildren();
+    public BoardView(BoardModel model) {
         this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
         this.tileviews = new TileView[WIDTH][HEIGHT];
 
-        var colored = false;
-        for (int y = 0; y < board.tiles.length; y++) {
-            for (int x = 0; x < board.tiles[y].length; x++) {
-                var tile = board.tiles[x][y];
-                var tileview = new TileView(tile, x, y, colored);
-                tileviews[x][y] = tileview;
-                children.add(tileview);
-
-                colored = !colored;
-            }
-            colored = !colored;
-        }
+        reset(model);
     }
     
     public void mark(int x, int y) throws IndexOutOfBoundsException {
@@ -53,5 +41,23 @@ public class BoardView extends Pane {
 
     public TileView getTile(int x, int y) {
         return tileviews[x][y];
+    }
+
+    public void reset(BoardModel model) {
+        var children = this.getChildren();
+        children.clear();
+
+        var colored = false;
+        for (int y = 0; y < model.tileModels.length; y++) {
+            for (int x = 0; x < model.tileModels[y].length; x++) {
+                var tile = model.tileModels[x][y];
+                var tileview = new TileView(tile, x, y, colored);
+                tileviews[x][y] = tileview;
+                children.add(tileview);
+
+                colored = !colored;
+            }
+            colored = !colored;
+        }
     }
 }

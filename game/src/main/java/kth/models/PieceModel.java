@@ -2,20 +2,18 @@ package kth.models;
 
 import javafx.scene.paint.Color;
 
-//TODO: Add own Macros to piece size
-
 public class PieceModel {
     public static int PIECE_RADIUS = 40;
-    private Color color;
+    private final Color color;
     private boolean isKing;
-    public TileModel tile;
+    public TileModel tileModel;
 
     public Color getColor() {
         return this.color;
     }
 
     PieceModel(TileModel tile, Color color) {
-        this.tile = tile;
+        this.tileModel = tile;
         this.color = color;
     }
 

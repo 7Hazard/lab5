@@ -1,5 +1,6 @@
 package kth.views;
 
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import kth.controllers.GameController;
@@ -22,9 +23,11 @@ public class PieceView extends Circle {
 
         relocate((TILE_SIZE - 2 * PIECE_RADIUS) / 2, (TILE_SIZE - 2 * PIECE_RADIUS) / 2);
         
-        setOnMouseClicked(mouseEvent -> {
-            GameController.get().onSelectPiece(this);
-        });
+        setOnMouseClicked(this::onClick);
+    }
+
+    private void onClick(MouseEvent mouseEvent) {
+        GameController.get().onSelectPiece(this);
     }
 
     public void setTileView(TileView view) {
