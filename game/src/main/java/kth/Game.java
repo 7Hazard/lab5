@@ -115,5 +115,11 @@ public class Game {
     public void end(PieceColor winner) {
         gameView.getBoardView().getModel().setCurrentTurn(PieceColor.None);
         gameView.showWinner(winner);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText(winner.name() + " is the winner!");
+        alert.showAndWait();
+
+        GameController.get().restart();
     }
 }
