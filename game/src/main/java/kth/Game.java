@@ -56,16 +56,16 @@ public class Game {
     }
 
     public void save() {
-        var savename = "tmp";
+        var savename = "";
 
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setHeaderText("Input savename");
+        dialog.setHeaderText("Skriv namnet på sparningen");
         var s = dialog.showAndWait();
         if(s.isEmpty()) return;
         else if(!s.get().isEmpty()) savename = s.get();
         else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Invalid save name");
+            alert.setHeaderText("Fel inmatning på sparnamnet");
             alert.showAndWait();
             return;
         }
@@ -74,8 +74,8 @@ public class Game {
             gameView.getBoardView().getModel().save(savename);
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Save error");
-            alert.setContentText("Could not save to '"+savename+"'\nException: "+e.toString());
+            alert.setHeaderText("Fel vid sparning");
+            alert.setContentText("Kunde inte spara med namnet '"+savename+"'\nException: "+e.getLocalizedMessage());
             alert.showAndWait();
 
             System.err.println("Could not save to "+savename);
@@ -84,10 +84,10 @@ public class Game {
     }
 
     public void load() {
-        var savename = "tmp";
+        var savename = "";
 
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setHeaderText("Input savename");
+        dialog.setHeaderText("Skriv namnet på sparningen");
         var s = dialog.showAndWait();
         if(s.isEmpty()) return;
         else if(!s.get().isEmpty()) savename = s.get();
@@ -103,8 +103,8 @@ public class Game {
             gameView.updateInfo();
         } catch (Throwable e) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Load error");
-            alert.setContentText("Could not load from '"+savename+"'\nException: "+e.toString());
+            alert.setHeaderText("Fel vid laddning");
+            alert.setContentText("Kunde inte ladda från '"+savename+"'\nException: "+e.getLocalizedMessage());
             alert.showAndWait();
 
             System.err.println("Could not load from "+savename);
@@ -117,7 +117,7 @@ public class Game {
         gameView.showWinner(winner);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText(winner.name() + " is the winner!");
+        alert.setHeaderText(winner.localName() + " är vinnaren!");
         alert.showAndWait();
 
         GameController.get().restart();
