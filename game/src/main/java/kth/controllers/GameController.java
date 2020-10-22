@@ -173,6 +173,7 @@ public class GameController {
             } else if (currentTurn == PieceColor.Red) {
                 board.getModel().setCurrentTurn(PieceColor.Black);
             }
+            Game.get().getGameView().updateInfo();
         }
 
         selectedPiece = null;

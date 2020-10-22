@@ -54,6 +54,7 @@ public class Game {
 
     public void reset() {
         gameView.getBoardView().reset(new BoardModel());
+        gameView.updateInfo();
     }
 
     public void save() {
@@ -65,6 +66,7 @@ public class Game {
 
         try {
             gameView.getBoardView().reset(BoardModel.load("tmp"));
+            gameView.updateInfo();
         } catch (Throwable e) {
             System.err.println("Could not load from "+savename);
             e.printStackTrace();
