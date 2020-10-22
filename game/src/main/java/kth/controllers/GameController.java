@@ -1,9 +1,9 @@
 package kth.controllers;
 
-import javafx.scene.paint.*;
-import kth.*;
-import kth.models.*;
-import kth.views.*;
+import kth.Game;
+import kth.PieceColor;
+import kth.views.PieceView;
+import kth.views.TileView;
 
 import static kth.Game.HEIGHT;
 import static kth.Game.WIDTH;
@@ -49,7 +49,7 @@ public class GameController {
                 if (!(currentPiece.getColor() == tilemodel.getPieceModel().getColor())) {
                     x = x + dx;
                     y = y + dy;
-                    if (board.posIsValid(x,y) &&!board.getTile(x, y).getModel().hasPiece()) {
+                    if (board.posIsValid(x, y) && !board.getTile(x, y).getModel().hasPiece()) {
                         board.mark(x, y);
                     }
                 }
@@ -76,7 +76,7 @@ public class GameController {
         }
 
         var currentTurn = board.getModel().getCurrentTurn();
-        if(view.getModel().getColor() != currentTurn) {
+        if (view.getModel().getColor() != currentTurn) {
             return;
         }
         selectedPiece = view;
@@ -140,37 +140,37 @@ public class GameController {
             int counterRed = 0;
             int counterBlack = 0;
 
-            for(int y = 0; y < HEIGHT; y++){
-                for(int x = 0 ; x < WIDTH; x++){
-                    if(board.getTile(x,y).getModel().hasPiece()){
-                        var piece = board.getTile(x,y).getModel().getPieceModel();
-                        if(piece.getColor() == PieceColor.Black){
+            for (int y = 0; y < HEIGHT; y++) {
+                for (int x = 0; x < WIDTH; x++) {
+                    if (board.getTile(x, y).getModel().hasPiece()) {
+                        var piece = board.getTile(x, y).getModel().getPieceModel();
+                        if (piece.getColor() == PieceColor.Black) {
                             counterBlack++;
                         }
-                        if(piece.getColor() == PieceColor.Red){
+                        if (piece.getColor() == PieceColor.Red) {
                             counterRed++;
                         }
                     }
                 }
             }
-            if(counterRed == 0){
+            if (counterRed == 0) {
                 System.out.println("RED: Game over");
             }
-            if(counterBlack == 0){
+            if (counterBlack == 0) {
                 System.out.println("BLACK: Game over");
             }
 
-            if(selectedPiece.tileView.getY() == HEIGHT -1 && selectedPiece.getModel().isRed()){
+            if (selectedPiece.tileView.getY() == HEIGHT - 1 && selectedPiece.getModel().isRed()) {
                 selectedPiece.makeKing();
             }
-            if(selectedPiece.tileView.getY() == 0 && selectedPiece.getModel().isBlack()){
+            if (selectedPiece.tileView.getY() == 0 && selectedPiece.getModel().isBlack()) {
                 selectedPiece.makeKing();
             }
 
             var currentTurn = board.getModel().getCurrentTurn();
-            if(currentTurn == PieceColor.Black){
+            if (currentTurn == PieceColor.Black) {
                 board.getModel().setCurrentTurn(PieceColor.Red);
-            }else if(currentTurn == PieceColor.Red){
+            } else if (currentTurn == PieceColor.Red) {
                 board.getModel().setCurrentTurn(PieceColor.Black);
             }
         }

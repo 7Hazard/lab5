@@ -7,7 +7,6 @@ import kth.models.BoardModel;
 import static kth.Game.*;
 
 public class BoardView extends Pane {
-
     private final TileView[][] tileviews;
     private BoardModel model;
 
