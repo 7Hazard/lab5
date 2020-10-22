@@ -4,13 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import kth.controllers.GameController;
 import kth.models.BoardModel;
 import kth.views.BoardView;
 import kth.views.GameView;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 public class Game {
     public static final int TILE_SIZE = 100;
@@ -56,19 +59,14 @@ public class Game {
     }
 
     public void save() {
-        var savename = "";
-
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setHeaderText("Skriv namnet på sparningen");
-        var s = dialog.showAndWait();
-        if(s.isEmpty()) return;
-        else if(!s.get().isEmpty()) savename = s.get();
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Fel inmatning på sparnamnet");
-            alert.showAndWait();
-            return;
-        }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(Paths.get("./").toFile());
+        fileChooser.setTitle("Open Save File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Save Files", "*.save"));
+        var res = fileChooser.showSaveDialog(stage);
+        if(res == null) return;
+        var savename = res.getAbsolutePath();
 
         try {
             gameView.getBoardView().getModel().save(savename);
@@ -84,19 +82,14 @@ public class Game {
     }
 
     public void load() {
-        var savename = "";
-
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setHeaderText("Skriv namnet på sparningen");
-        var s = dialog.showAndWait();
-        if(s.isEmpty()) return;
-        else if(!s.get().isEmpty()) savename = s.get();
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Invalid save name");
-            alert.showAndWait();
-            return;
-        }
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setInitialDirectory(Paths.get("./").toFile());
+        fileChooser.setTitle("Open Save File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Save Files", "*.save"));
+        var res = fileChooser.showOpenDialog(stage);
+        if(res == null) return;
+        var savename = res.getAbsolutePath();
 
         try {
             gameView.getBoardView().reset(BoardModel.load(savename));
@@ -117,6 +110,7 @@ public class Game {
         gameView.showWinner(winner);
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Vi har en vinnare");
         alert.setHeaderText(winner.localName() + " är vinnaren!");
         alert.showAndWait();
 

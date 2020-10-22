@@ -44,7 +44,7 @@ public class BoardModel implements Serializable {
     }
 
     public static BoardModel load(String savename) throws IOException, ClassNotFoundException {
-        var filepath = savename+".save";
+        var filepath = savename;
         var fileStream = new FileInputStream(filepath);
         var inputStream = new ObjectInputStream(fileStream);
         var model = (BoardModel)inputStream.readObject();
@@ -55,7 +55,7 @@ public class BoardModel implements Serializable {
     }
 
     public void save(String name) throws IOException {
-        var filepath = name+".save";
+        var filepath = name;
 
         var fileStream = new FileOutputStream(filepath);
         var outputStream = new ObjectOutputStream(fileStream);
