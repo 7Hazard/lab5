@@ -179,20 +179,18 @@ public class GameController {
             }
 
             // if cant jump over, switch turn
-            if(!jumpedOver)
-            {
+            if (!jumpedOver) {
                 endTurn(board);
             } else {
                 board.unmarkAll();
-                if(!markIfCanJumpOver())
+                if (!markIfCanJumpOver())
                     endTurn(board);
             }
 
             Game.get().getGameView().updateInfo();
         }
 
-        if(!jumpedOver)
-        {
+        if (!jumpedOver) {
             selectedPiece = null;
             board.unmarkAll();
         }
@@ -216,19 +214,19 @@ public class GameController {
         // down || king
         if (model.isKing() || model.isRed()) {
             // left
-            if(markIfCanJumpOver(-1, +1)) marked = true;
+            if (markIfCanJumpOver(-1, +1)) marked = true;
 
             // right
-            if(markIfCanJumpOver(+1, +1)) marked = true;
+            if (markIfCanJumpOver(+1, +1)) marked = true;
         }
 
         // up || king
         if (model.isKing() || model.isBlack()) {
             // left
-            if(markIfCanJumpOver(-1, -1)) marked = true;
+            if (markIfCanJumpOver(-1, -1)) marked = true;
 
             // right
-            if(markIfCanJumpOver(+1, -1)) marked = true;
+            if (markIfCanJumpOver(+1, -1)) marked = true;
         }
 
         return marked;
@@ -240,9 +238,16 @@ public class GameController {
 
         var x = tile.getX() + dx;
         var y = tile.getY() + dy;
-        if(board.posIsValid(x, y) && board.getTile(x, y).getModel().hasPiece() && board.posIsValid(x+dx, y+dy) && !board.getTile(x+dx, y+dy).getModel().hasPiece()) {
-            board.mark(x+dx, y+dy);
-            return true;
+        if (board.posIsValid(x, y)) {
+            var cpiece = board.getTile(x, y).getModel();
+            if (cpiece.hasPiece()
+                    && cpiece.getPieceModel().getColor() != selectedPiece.getModel().getColor()
+                    && board.posIsValid(x + dx, y + dy)
+                    && !board.getTile(x + dx, y + dy).getModel().hasPiece())
+            {
+                board.mark(x + dx, y + dy);
+                return true;
+            }
         }
 
         return false;
