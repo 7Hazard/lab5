@@ -61,7 +61,7 @@ public class Game {
     public void save() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(Paths.get("./").toFile());
-        fileChooser.setTitle("Open Save File");
+        fileChooser.setTitle("Spara spelet i en fil");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Save Files", "*.save"));
         var res = fileChooser.showSaveDialog(stage);
@@ -84,7 +84,7 @@ public class Game {
     public void load() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(Paths.get("./").toFile());
-        fileChooser.setTitle("Open Save File");
+        fileChooser.setTitle("Öppna sparfilen");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Save Files", "*.save"));
         var res = fileChooser.showOpenDialog(stage);
