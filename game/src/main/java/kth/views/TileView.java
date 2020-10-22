@@ -9,7 +9,7 @@ import kth.controllers.*;
 import kth.models.*;
 
 public class TileView extends Group {
-    public final TileModel model;
+    private final TileModel model;
     private final int x;
     private final int y;
     private final Rectangle rect;

@@ -2,6 +2,7 @@ package kth.controllers;
 
 import kth.Game;
 import kth.PieceColor;
+import kth.views.BoardView;
 import kth.views.PieceView;
 import kth.views.TileView;
 
@@ -53,7 +54,6 @@ public class GameController {
                         board.mark(x, y);
                     }
                 }
-
             }
         }
     }
@@ -62,7 +62,6 @@ public class GameController {
 
         var tile = view.tileView;
         var board = Game.get().getGameView().getBoardView();
-        var model = view.getModel();
 
         System.out.println("ON CLICK " + tile.getX() + " " + tile.getY());
 
@@ -79,9 +78,18 @@ public class GameController {
         if (view.getModel().getColor() != currentTurn) {
             return;
         }
-        selectedPiece = view;
 
-        // down
+        selectedPiece = view;
+        markValidMoves();
+
+        Game.get().draw();
+    }
+
+    private void markValidMoves() {
+        var model = selectedPiece.getModel();
+        var tile = selectedPiece.tileView;
+
+        // down || king
         if (model.isKing() || model.isRed()) {
             // left
             var x = tile.getX() - 1;
@@ -94,6 +102,7 @@ public class GameController {
             markIfValid(+1, +1);
         }
 
+        // up || king
         if (model.isKing() || model.isBlack()) {
             // left
             var x = tile.getX() - 1;
@@ -105,16 +114,14 @@ public class GameController {
             y = tile.getY() - 1;
             markIfValid(+1, -1);
         }
-
-        Game.get().draw();
     }
 
     public void onSelectTile(TileView selectedView) {
         System.out.println("TILE ON CLICK");
         var board = Game.get().getGameView().getBoardView();
 
+        boolean jumpedOver = false;
         if (selectedView.isMarked()) {
-
             var currentX = selectedPiece.tileView.getX();
             var currentY = selectedPiece.tileView.getY();
 
@@ -124,19 +131,21 @@ public class GameController {
             var diffX = (futureX - currentX);
             var diffY = (futureY - currentY);
             if (Math.abs(diffX) > 1 && Math.abs(diffY) > 1) {
+                jumpedOver = true;
+
                 var dx = diffX / 2;
                 var dy = diffY / 2;
                 var removePieceX = selectedPiece.tileView.getX() + dx;
                 var removePieceY = selectedPiece.tileView.getY() + dy;
-                if (board.posIsValid(removePieceX, removePieceY)) {
-                    var tile = board.getTile(removePieceX, removePieceY);
-                    tile.getModel().setPieceModel(null);
-                    tile.removePiece();
-                }
+
+                var tile = board.getTile(removePieceX, removePieceY);
+                tile.getModel().setPieceModel(null);
+                tile.removePiece();
             }
-            selectedPiece.tileView.model.setPieceModel(null);
+
+            selectedPiece.tileView.getModel().setPieceModel(null);
             selectedView.setPiece(selectedPiece);
-            selectedView.model.setPieceModel(selectedPiece.getModel());
+            selectedView.getModel().setPieceModel(selectedPiece.getModel());
 
             int counterRed = 0;
             int counterBlack = 0;
@@ -169,18 +178,73 @@ public class GameController {
                 selectedPiece.makeKing();
             }
 
-            var currentTurn = board.getModel().getCurrentTurn();
-            if (currentTurn == PieceColor.Black) {
-                board.getModel().setCurrentTurn(PieceColor.Red);
-            } else if (currentTurn == PieceColor.Red) {
-                board.getModel().setCurrentTurn(PieceColor.Black);
+            // if cant jump over, switch turn
+            if(!jumpedOver)
+            {
+                endTurn(board);
+            } else {
+                board.unmarkAll();
+                if(!markIfCanJumpOver())
+                    endTurn(board);
             }
+
             Game.get().getGameView().updateInfo();
         }
 
-        selectedPiece = null;
-        board.unmarkAll();
+        if(!jumpedOver)
+        {
+            selectedPiece = null;
+            board.unmarkAll();
+        }
 
         Game.get().draw();
+    }
+
+    private void endTurn(BoardView board) {
+        var currentTurn = board.getModel().getCurrentTurn();
+        if (currentTurn == PieceColor.Black) {
+            board.getModel().setCurrentTurn(PieceColor.Red);
+        } else if (currentTurn == PieceColor.Red) {
+            board.getModel().setCurrentTurn(PieceColor.Black);
+        }
+    }
+
+    private boolean markIfCanJumpOver() {
+        boolean marked = false;
+        var model = selectedPiece.getModel();
+
+        // down || king
+        if (model.isKing() || model.isRed()) {
+            // left
+            if(markIfCanJumpOver(-1, +1)) marked = true;
+
+            // right
+            if(markIfCanJumpOver(+1, +1)) marked = true;
+        }
+
+        // up || king
+        if (model.isKing() || model.isBlack()) {
+            // left
+            if(markIfCanJumpOver(-1, -1)) marked = true;
+
+            // right
+            if(markIfCanJumpOver(+1, -1)) marked = true;
+        }
+
+        return marked;
+    }
+
+    private boolean markIfCanJumpOver(int dx, int dy) {
+        var tile = selectedPiece.tileView;
+        var board = Game.get().getGameView().getBoardView();
+
+        var x = tile.getX() + dx;
+        var y = tile.getY() + dy;
+        if(board.posIsValid(x, y) && board.getTile(x, y).getModel().hasPiece() && board.posIsValid(x+dx, y+dy) && !board.getTile(x+dx, y+dy).getModel().hasPiece()) {
+            board.mark(x+dx, y+dy);
+            return true;
+        }
+
+        return false;
     }
 }
