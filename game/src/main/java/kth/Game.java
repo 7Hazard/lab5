@@ -2,9 +2,7 @@ package kth;
 
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import kth.controllers.GameController;
@@ -58,16 +56,57 @@ public class Game {
     }
 
     public void save() {
-        gameView.getBoardView().getModel().save("tmp");
+        var savename = "tmp";
+
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setHeaderText("Input savename");
+        var s = dialog.showAndWait();
+        if(s.isEmpty()) return;
+        else if(!s.get().isEmpty()) savename = s.get();
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Invalid save name");
+            alert.showAndWait();
+            return;
+        }
+
+        try {
+            gameView.getBoardView().getModel().save(savename);
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Save error");
+            alert.setContentText("Could not save to '"+savename+"'\nException: "+e.toString());
+            alert.showAndWait();
+
+            System.err.println("Could not save to "+savename);
+            e.printStackTrace();
+        }
     }
 
     public void load() {
         var savename = "tmp";
 
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setHeaderText("Input savename");
+        var s = dialog.showAndWait();
+        if(s.isEmpty()) return;
+        else if(!s.get().isEmpty()) savename = s.get();
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Invalid save name");
+            alert.showAndWait();
+            return;
+        }
+
         try {
-            gameView.getBoardView().reset(BoardModel.load("tmp"));
+            gameView.getBoardView().reset(BoardModel.load(savename));
             gameView.updateInfo();
         } catch (Throwable e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Load error");
+            alert.setContentText("Could not load from '"+savename+"'\nException: "+e.toString());
+            alert.showAndWait();
+
             System.err.println("Could not load from "+savename);
             e.printStackTrace();
         }

@@ -54,20 +54,16 @@ public class BoardModel implements Serializable {
         return model;
     }
 
-    public void save(String name) {
+    public void save(String name) throws IOException {
         var filepath = name+".save";
-        try {
-            var fileStream = new FileOutputStream(filepath);
-            var outputStream = new ObjectOutputStream(fileStream);
-            outputStream.writeObject(this);
-            outputStream.flush();
-            outputStream.close();
 
-            System.out.println("Saved");
-        } catch (IOException e) {
-            System.err.println("Could not save to "+filepath);
-            e.printStackTrace();
-        }
+        var fileStream = new FileOutputStream(filepath);
+        var outputStream = new ObjectOutputStream(fileStream);
+        outputStream.writeObject(this);
+        outputStream.flush();
+        outputStream.close();
+
+        System.out.println("Saved");
     }
 
     public PieceColor getCurrentTurn() {
