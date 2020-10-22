@@ -30,3 +30,5 @@ game/target/
 .idea/workspace.xml
 
 *.save
+
+threads/target/

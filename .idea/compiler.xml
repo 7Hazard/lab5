@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="game" />
+        <module name="threads" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="game" target="11" />
+      <module name="threads" target="10" />
     </bytecodeTargetLevel>
   </component>
 </project>
