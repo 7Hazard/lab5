@@ -72,4 +72,9 @@ public class Game {
             e.printStackTrace();
         }
     }
+
+    public void end(PieceColor winner) {
+        gameView.getBoardView().getModel().setCurrentTurn(PieceColor.None);
+        gameView.showWinner(winner);
+    }
 }

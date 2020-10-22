@@ -63,6 +63,14 @@ public class GameView extends VBox {
         infoBar.getChildren().addAll(text);
     }
 
+    public void showWinner(PieceColor winner) {
+        infoBar.getChildren().clear();
+
+        Text text = new Text(10, 15, winner.name() + " wins");
+
+        infoBar.getChildren().addAll(text);
+    }
+
     private void onClickLoad(ActionEvent actionEvent) {
         GameController.get().load();
     }

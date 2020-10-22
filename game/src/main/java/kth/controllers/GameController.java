@@ -137,9 +137,9 @@ public class GameController {
             selectedPiece.tileView.model.setPieceModel(null);
             selectedView.setPiece(selectedPiece);
             selectedView.model.setPieceModel(selectedPiece.getModel());
+
             int counterRed = 0;
             int counterBlack = 0;
-
             for (int y = 0; y < HEIGHT; y++) {
                 for (int x = 0; x < WIDTH; x++) {
                     if (board.getTile(x, y).getModel().hasPiece()) {
@@ -154,10 +154,12 @@ public class GameController {
                 }
             }
             if (counterRed == 0) {
-                System.out.println("RED: Game over");
+                Game.get().end(PieceColor.Black);
+                return;
             }
             if (counterBlack == 0) {
-                System.out.println("BLACK: Game over");
+                Game.get().end(PieceColor.Red);
+                return;
             }
 
             if (selectedPiece.tileView.getY() == HEIGHT - 1 && selectedPiece.getModel().isRed()) {
