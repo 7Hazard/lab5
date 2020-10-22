@@ -9,6 +9,7 @@ import static kth.Game.WIDTH;
 
 public class BoardModel implements Serializable {
     public TileModel[][] tileModels = new TileModel[WIDTH][HEIGHT];
+    private PieceColor currentTurn = PieceColor.Black;
 
     public BoardModel() {
         for (int y = 0; y < HEIGHT; y++) {
@@ -67,5 +68,13 @@ public class BoardModel implements Serializable {
             System.err.println("Could not save to "+filepath);
             e.printStackTrace();
         }
+    }
+
+    public PieceColor getCurrentTurn() {
+        return currentTurn;
+    }
+
+    public void setCurrentTurn(PieceColor currentTurn) {
+        this.currentTurn = currentTurn;
     }
 }

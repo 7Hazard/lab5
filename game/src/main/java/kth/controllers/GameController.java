@@ -11,18 +11,17 @@ import static kth.Game.WIDTH;
 public class GameController {
     private static final GameController singleton = new GameController();
     private PieceView selectedPiece;
-    private PieceColor currentTurn = PieceColor.Black;
 
     public static GameController get() {
         return singleton;
     }
 
     public void restart() {
+        var game = Game.get();
         System.out.println("Restarting");
         selectedPiece = null;
-        currentTurn = PieceColor.Black;
-        Game.get().reset();
-        Game.get().draw();
+        game.reset();
+        game.draw();
     }
 
     public void save() {
@@ -76,6 +75,7 @@ public class GameController {
             return;
         }
 
+        var currentTurn = board.getModel().getCurrentTurn();
         if(view.getModel().getColor() != currentTurn) {
             return;
         }
@@ -112,7 +112,6 @@ public class GameController {
     public void onSelectTile(TileView selectedView) {
         System.out.println("TILE ON CLICK");
         var board = Game.get().getGameView().getBoardView();
-        var model = selectedView.model;
 
         if (selectedView.isMarked()) {
 
@@ -167,10 +166,12 @@ public class GameController {
             if(selectedPiece.tileView.getY() == 0 && selectedPiece.getModel().isBlack()){
                 selectedPiece.makeKing();
             }
+
+            var currentTurn = board.getModel().getCurrentTurn();
             if(currentTurn == PieceColor.Black){
-                currentTurn = PieceColor.Red;
+                board.getModel().setCurrentTurn(PieceColor.Red);
             }else if(currentTurn == PieceColor.Red){
-                currentTurn = PieceColor.Black;
+                board.getModel().setCurrentTurn(PieceColor.Black);
             }
         }
 
