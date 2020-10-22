@@ -11,7 +11,7 @@ import static kth.Game.WIDTH;
 public class GameController {
     private static final GameController singleton = new GameController();
     private PieceView selectedPiece;
-    private Color currentTurn = Color.BLACK;
+    private PieceColor currentTurn = PieceColor.Black;
 
     public static GameController get() {
         return singleton;
@@ -20,9 +20,18 @@ public class GameController {
     public void restart() {
         System.out.println("Restarting");
         selectedPiece = null;
-        currentTurn = Color.BLACK;
+        currentTurn = PieceColor.Black;
         Game.get().reset();
         Game.get().draw();
+    }
+
+    public void save() {
+        System.out.println("Saving");
+        Game.get().save();
+    }
+
+    public void load() {
+        Game.get().load();
     }
 
     public void markIfValid(int dx, int dy) {
@@ -136,10 +145,10 @@ public class GameController {
                 for(int x = 0 ; x < WIDTH; x++){
                     if(board.getTile(x,y).getModel().hasPiece()){
                         var piece = board.getTile(x,y).getModel().getPieceModel();
-                        if(piece.getColor() == Color.BLACK){
+                        if(piece.getColor() == PieceColor.Black){
                             counterBlack++;
                         }
-                        if(piece.getColor() == Color.RED){
+                        if(piece.getColor() == PieceColor.Red){
                             counterRed++;
                         }
                     }
@@ -158,10 +167,10 @@ public class GameController {
             if(selectedPiece.tileView.getY() == 0 && selectedPiece.getModel().isBlack()){
                 selectedPiece.makeKing();
             }
-            if(currentTurn == Color.BLACK){
-                currentTurn = Color.RED;
-            }else if(currentTurn == Color.RED){
-                currentTurn = Color.BLACK;
+            if(currentTurn == PieceColor.Black){
+                currentTurn = PieceColor.Red;
+            }else if(currentTurn == PieceColor.Red){
+                currentTurn = PieceColor.Black;
             }
         }
 

@@ -8,7 +8,8 @@ import static kth.Game.*;
 
 public class BoardView extends Pane {
 
-    private TileView[][] tileviews;
+    private final TileView[][] tileviews;
+    private BoardModel model;
 
     public BoardView(BoardModel model) {
         this.setPrefSize(WIDTH * TILE_SIZE, HEIGHT * TILE_SIZE);
@@ -44,6 +45,7 @@ public class BoardView extends Pane {
     }
 
     public void reset(BoardModel model) {
+        this.model = model;
         var children = this.getChildren();
         children.clear();
 
@@ -59,5 +61,9 @@ public class BoardView extends Pane {
             }
             colored = !colored;
         }
+    }
+
+    public BoardModel getModel() {
+        return model;
     }
 }

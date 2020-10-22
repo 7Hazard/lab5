@@ -1,6 +1,8 @@
 package kth.models;
 
-public class TileModel {
+import java.io.Serializable;
+
+public class TileModel implements Serializable {
     private PieceModel pieceModel;
 
     TileModel() {

@@ -1,11 +1,13 @@
 package kth.models;
 
-import javafx.scene.paint.Color;
+import kth.PieceColor;
+
+import java.io.*;
 
 import static kth.Game.HEIGHT;
 import static kth.Game.WIDTH;
 
-public class BoardModel {
+public class BoardModel implements Serializable {
     public TileModel[][] tileModels = new TileModel[WIDTH][HEIGHT];
 
     public BoardModel() {
@@ -14,10 +16,10 @@ public class BoardModel {
                 TileModel tile = new TileModel();
 
                 if (y <= 2 && (x + y) % 2 != 0) {
-                    tile.setPieceModel(new PieceModel(tile, Color.RED));
+                    tile.setPieceModel(new PieceModel(tile, PieceColor.Red));
                 }
                 if (y >= 5 && (x + y) % 2 != 0) {
-                    tile.setPieceModel(new PieceModel(tile, Color.BLACK));
+                    tile.setPieceModel(new PieceModel(tile, PieceColor.Black));
                 }
                 tileModels[x][y] = tile;
             }
@@ -26,21 +28,44 @@ public class BoardModel {
 
     @Override
     public String toString() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
 
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
                 if (tileModels[x][y].hasPiece())
-                    buffer.append("O");
+                    builder.append("O");
                 else
-                    buffer.append("x");
+                    builder.append("x");
             }
-            buffer.append("\n");
+            builder.append("\n");
         }
-        return buffer.toString();
+        return builder.toString();
     }
-    
-    public static void load(String filename) {
-        // TODO: 2020-10-20  
+
+    public static BoardModel load(String savename) throws IOException, ClassNotFoundException {
+        var filepath = savename+".save";
+        var fileStream = new FileInputStream(filepath);
+        var inputStream = new ObjectInputStream(fileStream);
+        var model = (BoardModel)inputStream.readObject();
+        inputStream.close();
+
+        System.out.println("Loaded");
+        return model;
+    }
+
+    public void save(String name) {
+        var filepath = name+".save";
+        try {
+            var fileStream = new FileOutputStream(filepath);
+            var outputStream = new ObjectOutputStream(fileStream);
+            outputStream.writeObject(this);
+            outputStream.flush();
+            outputStream.close();
+
+            System.out.println("Saved");
+        } catch (IOException e) {
+            System.err.println("Could not save to "+filepath);
+            e.printStackTrace();
+        }
     }
 }

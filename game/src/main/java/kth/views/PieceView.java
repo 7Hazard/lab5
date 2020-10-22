@@ -3,6 +3,7 @@ package kth.views;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import kth.PieceColor;
 import kth.controllers.GameController;
 import kth.models.*;
 
@@ -14,7 +15,7 @@ public class PieceView extends Circle {
     public TileView tileView;
 
     public PieceView(PieceModel model, TileView tile) {
-        super(PIECE_RADIUS, model.getColor());
+        super(PIECE_RADIUS, model.getColor() == PieceColor.Black ? Color.BLACK : Color.RED);
         this.model = model;
         this.tileView = tile;
 

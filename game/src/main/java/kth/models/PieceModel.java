@@ -1,18 +1,17 @@
 package kth.models;
 
 import javafx.scene.paint.Color;
+import kth.PieceColor;
 
-public class PieceModel {
+import java.io.Serializable;
+
+public class PieceModel implements Serializable {
     public static int PIECE_RADIUS = 40;
-    private final Color color;
+    private final PieceColor color;
     private boolean isKing;
     public TileModel tileModel;
 
-    public Color getColor() {
-        return this.color;
-    }
-
-    PieceModel(TileModel tile, Color color) {
+    PieceModel(TileModel tile, PieceColor color) {
         this.tileModel = tile;
         this.color = color;
     }
@@ -20,7 +19,7 @@ public class PieceModel {
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();
-        if (color == Color.RED) buffer.append("R");
+        if (color == PieceColor.Red) buffer.append("R");
         else buffer.append("B");
         return buffer.toString();
     }
@@ -33,11 +32,15 @@ public class PieceModel {
         isKing = king;
     }
 
+    public PieceColor getColor() {
+        return this.color;
+    }
+
     public boolean isRed() {
-        return color == Color.RED;
+        return color == PieceColor.Red;
     }
 
     public boolean isBlack() {
-        return color == Color.BLACK;
+        return color == PieceColor.Black;
     }
 }

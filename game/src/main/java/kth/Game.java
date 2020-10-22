@@ -12,6 +12,8 @@ import kth.models.BoardModel;
 import kth.views.BoardView;
 import kth.views.GameView;
 
+import java.io.IOException;
+
 public class Game {
     public static final int TILE_SIZE = 100;
     public static final int WIDTH = 8;
@@ -52,5 +54,20 @@ public class Game {
 
     public void reset() {
         gameView.getBoardView().reset(new BoardModel());
+    }
+
+    public void save() {
+        gameView.getBoardView().getModel().save("tmp");
+    }
+
+    public void load() {
+        var savename = "tmp";
+
+        try {
+            gameView.getBoardView().reset(BoardModel.load("tmp"));
+        } catch (Throwable e) {
+            System.err.println("Could not load from "+savename);
+            e.printStackTrace();
+        }
     }
 }
