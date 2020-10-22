@@ -7,10 +7,16 @@ import java.io.*;
 import static kth.Game.HEIGHT;
 import static kth.Game.WIDTH;
 
+/**
+ * Model for the whole board and it's tiles and pieces
+ */
 public class BoardModel implements Serializable {
     public TileModel[][] tileModels = new TileModel[WIDTH][HEIGHT];
     private PieceColor currentTurn = PieceColor.Black;
 
+    /**
+     * Creates a default board model
+     */
     public BoardModel() {
         for (int y = 0; y < HEIGHT; y++) {
             for (int x = 0; x < WIDTH; x++) {
@@ -27,6 +33,10 @@ public class BoardModel implements Serializable {
         }
     }
 
+    /**
+     *
+     * @return Formatted string of the entire board
+     */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
@@ -43,8 +53,15 @@ public class BoardModel implements Serializable {
         return builder.toString();
     }
 
-    public static BoardModel load(String savename) throws IOException, ClassNotFoundException {
-        var filepath = savename;
+    /**
+     * Loads a board from a file
+     * @param path
+     * @return The loaded model of the board
+     * @throws IOException If file could not be loaded
+     * @throws ClassNotFoundException if file could not be deserialize
+     */
+    public static BoardModel load(String path) throws IOException, ClassNotFoundException {
+        var filepath = path;
         var fileStream = new FileInputStream(filepath);
         var inputStream = new ObjectInputStream(fileStream);
         var model = (BoardModel)inputStream.readObject();
@@ -54,8 +71,13 @@ public class BoardModel implements Serializable {
         return model;
     }
 
-    public void save(String name) throws IOException {
-        var filepath = name;
+    /**
+     * Saves the model into a file via serialization
+     * @param path the filepath to the save
+     * @throws IOException if file could not be written to
+     */
+    public void save(String path) throws IOException {
+        var filepath = path;
 
         var fileStream = new FileOutputStream(filepath);
         var outputStream = new ObjectOutputStream(fileStream);
