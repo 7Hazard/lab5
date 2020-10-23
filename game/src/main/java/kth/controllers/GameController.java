@@ -10,12 +10,12 @@ import static kth.Game.HEIGHT;
 import static kth.Game.WIDTH;
 
 public class GameController {
-    private static final GameController singleton = new GameController();
+//    private static final GameController singleton = new GameController();
     private PieceView selectedPiece;
 
-    public static GameController get() {
-        return singleton;
-    }
+//    public static GameController get() {
+//        return singleton;
+//    }
 
     public void restart() {
         var game = Game.get();
@@ -41,7 +41,7 @@ public class GameController {
         var currentPiece = selectedPiece.getModel();
         var board = Game.get().getGameView().getBoardView();
 
-        if (board.posIsValid(x, y)) {
+        if (board.getModel().posIsValid(x, y)) {
             var mtile = board.getTile(x, y);
             var tilemodel = mtile.getModel();
             if (!tilemodel.hasPiece()) {
@@ -50,7 +50,7 @@ public class GameController {
                 if (!(currentPiece.getColor() == tilemodel.getPieceModel().getColor())) {
                     x = x + dx;
                     y = y + dy;
-                    if (board.posIsValid(x, y) && !board.getTile(x, y).getModel().hasPiece()) {
+                    if (board.getModel().posIsValid(x, y) && !board.getTile(x, y).getModel().hasPiece()) {
                         board.mark(x, y);
                     }
                 }
@@ -238,11 +238,11 @@ public class GameController {
 
         var x = tile.getX() + dx;
         var y = tile.getY() + dy;
-        if (board.posIsValid(x, y)) {
+        if (board.getModel().posIsValid(x, y)) {
             var cpiece = board.getTile(x, y).getModel();
             if (cpiece.hasPiece()
                     && cpiece.getPieceModel().getColor() != selectedPiece.getModel().getColor()
-                    && board.posIsValid(x + dx, y + dy)
+                    && board.getModel().posIsValid(x + dx, y + dy)
                     && !board.getTile(x + dx, y + dy).getModel().hasPiece())
             {
                 board.mark(x + dx, y + dy);

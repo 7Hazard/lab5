@@ -95,4 +95,8 @@ public class BoardModel implements Serializable {
     public void setCurrentTurn(PieceColor currentTurn) {
         this.currentTurn = currentTurn;
     }
+
+    public boolean posIsValid(int x, int y) {
+        return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
+    }
 }

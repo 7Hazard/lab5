@@ -32,3 +32,4 @@ game/target/
 *.save
 
 threads/target/
+.DS_Store

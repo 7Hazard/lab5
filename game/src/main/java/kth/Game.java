@@ -21,6 +21,7 @@ public class Game {
     public static final int HEIGHT = 8;
 
     private static Game singleton = new Game();
+    private GameController controller = new GameController();
     private Stage stage;
     private GameView gameView;
 
@@ -47,10 +48,6 @@ public class Game {
 
     public GameView getGameView() {
         return gameView;
-    }
-    
-    public static boolean posIsValid(int x, int y) {
-        return x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT;
     }
 
     public void reset() {
@@ -114,6 +111,10 @@ public class Game {
         alert.setHeaderText(winner.localName() + " är vinnaren!");
         alert.showAndWait();
 
-        GameController.get().restart();
+        controller.restart();
+    }
+
+    public GameController getController() {
+        return controller;
     }
 }

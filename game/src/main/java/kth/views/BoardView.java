@@ -18,12 +18,12 @@ public class BoardView extends Pane {
     }
     
     public void mark(int x, int y) throws IndexOutOfBoundsException {
-        if (!Game.posIsValid(x, y)) throw new IndexOutOfBoundsException();
+        if (!model.posIsValid(x, y)) throw new IndexOutOfBoundsException();
         tileviews[x][y].setMarked(true);
     }
 
     public void unmark(int x, int y) throws IndexOutOfBoundsException {
-        if (!posIsValid(x, y)) throw new IndexOutOfBoundsException();
+        if (!model.posIsValid(x, y)) throw new IndexOutOfBoundsException();
         tileviews[x][y].setMarked(false);
     }
 
@@ -33,10 +33,6 @@ public class BoardView extends Pane {
                 tile.setMarked(false);
             }
         }
-    }
-    
-    public boolean posIsValid(int x, int y) {
-        return Game.posIsValid(x, y);
     }
 
     public TileView getTile(int x, int y) {

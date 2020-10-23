@@ -3,6 +3,7 @@ package kth.views;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import kth.Game;
 import kth.PieceColor;
 import kth.controllers.GameController;
 import kth.models.*;
@@ -28,7 +29,7 @@ public class PieceView extends Circle {
     }
 
     private void onClick(MouseEvent mouseEvent) {
-        GameController.get().onSelectPiece(this);
+        Game.get().getController().onSelectPiece(this);
     }
 
     public void setTileView(TileView view) {

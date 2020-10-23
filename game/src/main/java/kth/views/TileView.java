@@ -94,6 +94,6 @@ public class TileView extends Group {
     }
 
     private void onClick(MouseEvent mouseEvent) {
-        GameController.get().onSelectTile(this);
+        Game.get().getController().onSelectTile(this);
     }
 }

@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import kth.Game;
 import kth.PieceColor;
 import kth.controllers.GameController;
 import kth.models.BoardModel;
@@ -90,14 +91,14 @@ public class GameView extends VBox {
     }
 
     private void onClickLoad(ActionEvent actionEvent) {
-        GameController.get().load();
+        Game.get().getController().load();
     }
 
     private void onClickSave(ActionEvent actionEvent) {
-        GameController.get().save();
+        Game.get().getController().save();
     }
 
     private void onClickRestart(ActionEvent actionEvent) {
-        GameController.get().restart();
+        Game.get().getController().restart();
     }
 }
